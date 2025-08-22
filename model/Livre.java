@@ -11,39 +11,27 @@ public class Livre {
     private String titre;
     private String auteur;
     private int quantite;
-    private int isbn;  // ? possible de créer une matrice : int [] isbn = {{000}"-"{0}"-"{000}"-"{00000}"-"{0}};
-    private String etatLivre = "dispo";  //dispo ou indispo
+    private String isbn;  // ? possible de créer une matrice : int [] isbn = {{000}"-"{0}"-"{000}"-"{00000}"-"{0}};
+    private Boolean etatLivre;  //dispo ou indispo
 
     private String REGEXTitre = "/^[A-Za-z0-9\\\\s\\\\-\\\\&\\\\,\\\\.\\\\'\\\\:\\\\é\\\\è\\\\ê\\\\ë\\\\î\\\\ï\\\\ô\\\\ç\\\\ ]+$/gm;";
     private String REGEXIdentite = "^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[- ][A-Za-zÀ-ÖØ-öø-ÿ]+)*$";
     private String REGEX_ISBN = "^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$";
 
 
-    public static List<Livre> livres = new ArrayList<>();
+    public static ArrayList<Livre> livresList = new ArrayList<>();
 
-    public static List<Livre> getLivres() {
-        return livres;
-    }
-    public static void setLivres(List<Livre> livres) {
-        Livre.livres = livres;
-    }
-
-
-    public Livre(String titre, String auteur, int quantite, int ISBN,String etatLivre) throws SaisieException {
+    public Livre(String titre, String auteur, int quantite, int ISBN,Boolean etatLivre) throws SaisieException {
         this.setTitre(titre);
         this.setAuteur (auteur);
         this.setQuantite(quantite);
         this.setIsbn(isbn);
-        this.setEtat (etatLivre); // pas clair avec l'enum DIPONIBLE transfo pour faciliter :/
-    }
-
-    Livre(String titre, String auteur) throws SaisieException {
-        this.setTitre(titre);
-        this.setAuteur (auteur);
+        this.setEtat(etatLivre); // pas clair avec l'enum DIPONIBLE transfo pour faciliter :/
+        livresList.add(this);
     }
 
     public String getTitre() {
-        return titre;
+        return this.titre;
     }
     public void setTitre(String titre) throws SaisieException {
         if (titre==null ||titre.isEmpty() || !titre.matches(REGEXTitre))  {
@@ -53,40 +41,48 @@ public class Livre {
         }
     }
     public String getAuteur() {
-        return auteur;
+        return this.auteur;
     }
     public void setAuteur(String auteur) throws SaisieException {
-        if (auteur==null || !auteur.matches(REGEXIdentite))  {
+        if (auteur==null || auteur.isEmpty() || !auteur.matches(REGEXIdentite))  {
             throw new SaisieException(" Veuillez entrer le Nom et Prénom de l'auteur. ");
+        }else {
+            this.auteur = auteur;
         }
-        this.auteur = auteur;
     }
+
     public int getQuantite() {
-        return quantite;
+        return this.quantite;
     }
-    public void setQuantite(int quantite) {
-        this.quantite = quantite;
+    public void setQuantite(int quantite) throws SaisieException {
+        if(quantite <= 0) {
+            throw new SaisieException("La quantité ne peux être négative ou nulle");
+        }else{
+            this.quantite = quantite;
+        }
     }
-    public int getIsbn() {
-        return isbn;
+
+    public String getIsbn() {
+        return this.isbn;
     }
-    public void setIsbn(int isbn) throws SaisieException {
+    public void setIsbn(String isbn) throws SaisieException {
         if( !isbn.matches(REGEX_ISBN)) {  // quelle nommenclature pour dire isbn non conforme a la REGEX
             throw new SaisieException("L'identification, numéro ISBN du livre, n'est pas valide. Veuillez le resaisir.");
         }
         this.isbn = isbn;
     }
-    public String getEtat() {
-        return etatLivre;
+
+    public Boolean getEtat() {
+        return this.etatLivre;
     }
-    public void setEtat(String etatLivre) throws SaisieException {
-        if (etatLivre ==null || etatLivre.isEmpty()) {
+    public void setEtat(Boolean etatLivre) throws SaisieException {
+        if (!etatLivre) {
             throw new SaisieException("Veuillez saisir si votre livre est DISPONIBLE ou INDISPONIBLE.");
+        }else{
+            this.etatLivre = etatLivre ;
         }
-        this.etatLivre = etatLivre ;
     }
-
-
+    /*
     public static int rechercheParTitre(String titre) {
         int index =0;
         for (index = 0; index < livres.size(); index++) {
@@ -109,7 +105,7 @@ public class Livre {
         return index; // retourne quel index ? tous les bons ?
 
     }
-    /* public static int rechercheParIsbn(String isbn) {
+     public static int rechercheParIsbn(String isbn) {
         int index =0;
         for (index = 0; index < isbn.length(); index++) {
             if (isbn.trim()== livres.getIsbn ()) {
@@ -118,7 +114,7 @@ public class Livre {
             }
         }
         return index;
-    }*/
+    }
     public static boolean supprimerLivreParIndex(int index) {
         getLivres().remove(index);
         return true;
@@ -128,7 +124,7 @@ public class Livre {
         getLivres().add(livre.getTitre());
     }
 
-
+    */
     @Override
     public String toString() {
         return "Titre du livre : " + this.getTitre() + " . Auteur : " + this.getAuteur() +
@@ -136,5 +132,6 @@ public class Livre {
                 " . Disponibilité : " + this.getEtat();
 
     }
+
 }
 

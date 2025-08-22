@@ -5,8 +5,10 @@ import model.Livre;
 import model.Bibliothecaire;
 import model.Pret;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class VueTpBibliotheque {
     String email;
@@ -16,7 +18,7 @@ public class VueTpBibliotheque {
     int isbn;
 
 
-    private static Scanner sc = new Scanner(System.in);
+    public static Scanner sc = new Scanner(System.in);
 
 
     //affichage abonnés VueAffichageAbonnes();
@@ -31,12 +33,11 @@ public class VueTpBibliotheque {
     }
     //affichage livres VueAffichageLivres();
 
-    public static void vueAffichageLivres(List<Livre> livres) {
+    public static void vueAffichageLivres(ArrayList liste){
 
         System.out.println("Affichage des livres :");
-        for (Livre livre : livres) {
-            System.out.println(livre);
-        }
+        liste.toString();
+
     }
 
     // affichage prets VueAffichagePret ();
@@ -48,13 +49,15 @@ public class VueTpBibliotheque {
             System.out.println(pret);
         }
     }
+
     // recherche par email pour abonne
     public static void vueRechercheParEmail() {
 
         System.out.println("Rechercher par email");
         System.out.println("Saisir l'email : ");
-        email = sc.nextLine().toLowerCase().trim(); // appliquer minuscule et nettoyage
+        String email = sc.nextLine().trim().toLowerCase(); // appliquer minuscule et nettoyage
     }
+
     // recherche par nom pour abonne, auteur, bibliothecaire
     public static void vueRechercheParNom() {
 
@@ -76,9 +79,6 @@ public class VueTpBibliotheque {
         System.out.println("Rechercher par n°ISBN ");
         System.out.println("Saisir l'ISBN du livre : ");
         isbn = sc.nextInt();
-    }
-
-
 
     }
 
