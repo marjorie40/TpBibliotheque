@@ -22,11 +22,7 @@ public class Abonne extends Utilisateur {
     private static List<Abonne> abonnes = new ArrayList<>();
 
     public static List<Abonne> getAbonnes() {
-        try {
             return abonnes;
-        } catch (Exception e) {
-            throw new RuntimeException(e); // genere automatiquement par IDE ... = throw new Saisie Exception ?
-        }
     }
 
     public Abonne(String nom, String prenom, String email, String dateInscription) throws SaisieException {
@@ -49,8 +45,6 @@ public class Abonne extends Utilisateur {
             throw new SaisieException("Votre adresse mail est invalide, veuillez la saisir anouveau.");
         } else {
             this.email = email;
-
-            this.setEmail (generateId());  // possible ??
         }
     }
 
@@ -93,8 +87,15 @@ public class Abonne extends Utilisateur {
         getAbonnes().remove(abonne);
     }
 
-    public List<Abonne> afficherAbonnes() {
-        return getAbonnes();
+    public void afficherAbonnes() {
+        // foreach : pour chaque objet de la liste
+//        for (Abonne abonne : getAbonnes()) {
+//            System.out.println(abonne.toString());
+//        }
+
+        for (int i = 0; i < getAbonnes().size(); i++) {
+            System.out.println(getAbonnes().get(i).toString());
+        }
     }
 
     @Override

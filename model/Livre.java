@@ -14,27 +14,27 @@ public class Livre {
     private String isbn;  // ? possible de créer une matrice : int [] isbn = {{000}"-"{0}"-"{000}"-"{00000}"-"{0}};
     private Boolean etatLivre;  //dispo ou indispo
 
-    private String REGEXTitre = "/^[A-Za-z0-9\\\\s\\\\-\\\\&\\\\,\\\\.\\\\'\\\\:\\\\é\\\\è\\\\ê\\\\ë\\\\î\\\\ï\\\\ô\\\\ç\\\\ ]+$/gm;";
+    private String REGEXTitre = "^[A-Za-z0-9\\\\s\\\\-\\\\&\\\\,\\\\.\\\\'\\\\:\\\\é\\\\è\\\\ê\\\\ë\\\\î\\\\ï\\\\ô\\\\ç\\\\ ]+$"; // retestee
     private String REGEXIdentite = "^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[- ][A-Za-zÀ-ÖØ-öø-ÿ]+)*$";
     private String REGEX_ISBN = "^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$";
 
 
     public static ArrayList<Livre> livresList = new ArrayList<>();
 
-    public Livre(String titre, String auteur, int quantite, int ISBN,Boolean etatLivre) throws SaisieException {
+    public Livre(String titre, String auteur, int quantite, String ISBN,Boolean etatLivre) throws SaisieException {
         this.setTitre(titre);
         this.setAuteur (auteur);
         this.setQuantite(quantite);
-        this.setIsbn(isbn);
+        this.setIsbn(ISBN);
         this.setEtat(etatLivre); // pas clair avec l'enum DIPONIBLE transfo pour faciliter :/
-        livresList.add(this);
     }
 
     public String getTitre() {
         return this.titre;
     }
     public void setTitre(String titre) throws SaisieException {
-        if (titre==null ||titre.isEmpty() || !titre.matches(REGEXTitre))  {
+        //if (titre==null ||titre.isEmpty() || !titre.matches(REGEXTitre))  {
+        if (titre==null ||titre.isEmpty())  {
             throw new SaisieException(" Veuillez entrer un titre de livre valide. ");
         } else {
             this.titre = titre.trim().toLowerCase();  //est ce judicieux de vouloir nettoyer et convertir le titre (pour facilité la recherche)
@@ -66,7 +66,8 @@ public class Livre {
         return this.isbn;
     }
     public void setIsbn(String isbn) throws SaisieException {
-        if( !isbn.matches(REGEX_ISBN)) {  // quelle nommenclature pour dire isbn non conforme a la REGEX
+        //if( !isbn.matches(REGEX_ISBN)) {  // quelle nommenclature pour dire isbn non conforme a la REGEX
+        if (!((isbn.length()) < 50) || isbn.trim().isEmpty() || isbn == null)  {
             throw new SaisieException("L'identification, numéro ISBN du livre, n'est pas valide. Veuillez le resaisir.");
         }
         this.isbn = isbn;
@@ -81,6 +82,17 @@ public class Livre {
         }else{
             this.etatLivre = etatLivre ;
         }
+    }
+
+    public static Livre rechercheParIsbn(String isbn) {
+
+        for (int index = 0; index < livresList.size(); index++) {
+            if (isbn.trim().equals(livresList.get(index).getIsbn().trim())) {
+                // ?? se traduit : equals recupere index de l'ISBN nettoyé dans -livresList- ?
+                return livresList.get(index);
+            }
+        }
+        return null;
     }
     /*
     public static int rechercheParTitre(String titre) {
@@ -105,16 +117,7 @@ public class Livre {
         return index; // retourne quel index ? tous les bons ?
 
     }
-     public static int rechercheParIsbn(String isbn) {
-        int index =0;
-        for (index = 0; index < isbn.length(); index++) {
-            if (isbn.trim()== livres.getIsbn ()) {
-                index = Livre.getLivres().indexOf(isbn);
-                break;
-            }
-        }
-        return index;
-    }
+
     public static boolean supprimerLivreParIndex(int index) {
         getLivres().remove(index);
         return true;

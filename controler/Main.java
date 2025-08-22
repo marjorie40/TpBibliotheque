@@ -7,6 +7,7 @@ import model.Pret;
 import view.VueTpBibliotheque;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -14,11 +15,92 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
+    private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) throws SaisieException {
+        // le controleur cree le monde
         creationBibliotheque();
-        Livre.livresList.toString();
-    }
+        // le controleur demande a la vue d'afficher les livres
+        // VueTpBibliotheque.vueAffichageLivres(Livre.livresList);
+
+//        boolean erreur = true;
+//        do {
+        // appel a la vue
+        //VueTpBibliotheque.demandeCreationLivre();
+        // controleur reprend la main - crée l'objet et le stocke
+//            try {
+//                Livre livre = new Livre(
+//                        VueTpBibliotheque.getTitre(),
+//                        VueTpBibliotheque.getAuteur(),
+//                        VueTpBibliotheque.getQuantite(),
+//                        VueTpBibliotheque.getIsbn(),
+//                        true);
+//                Livre.livresList.add(livre);
+//                erreur = false;
+//            } catch (SaisieException e) {
+//                VueTpBibliotheque.afficheMessage("Erreur !" +  e.getMessage());
+//            }
+//
+//        } while (erreur);
+
+        //VueTpBibliotheque.vueAffichageLivres(Livre.livresList);
+
+        // MENU
+        boolean fin = false;
+        do {
+            int choix = VueTpBibliotheque.afficheMenu();
+
+            switch (choix) {
+                case 1:
+                    VueTpBibliotheque.vueAffichageLivres(Livre.livresList);
+                    break;
+                case 2:
+                    boolean saisieErreur = true;
+                    do {
+                        // VUE
+
+                        VueTpBibliotheque.demandeCreationLivre();
+                        // CONTROLEUR
+                        // controleur reprend la main - crée l'objet et le stocke
+                        try {
+                            Livre ouvrage = new Livre(
+                                    VueTpBibliotheque.getTitre(),
+                                    VueTpBibliotheque.getAuteur(),
+                                    VueTpBibliotheque.getQuantite(),
+                                    VueTpBibliotheque.getIsbn(),
+                                    true);
+                            Livre.livresList.add(ouvrage);
+                            saisieErreur = false;
+                        } catch (SaisieException e) {
+                            VueTpBibliotheque.afficheMessage("Erreur !" +  e.getMessage(),0);
+                        }
+
+                    } while (saisieErreur);
+                    VueTpBibliotheque.afficheMessage("le livre est créé", 0);
+                    break;
+                case 3:
+                    // VUE
+                    VueTpBibliotheque.rechercheParIsbn();
+                    // CONTROLEUR
+                    Livre tempo = Livre.rechercheParIsbn(VueTpBibliotheque.getIsbn());
+                    if (tempo != null) {
+                        VueTpBibliotheque.afficheMessage(tempo.toString(), 1);
+                    } else {
+                        VueTpBibliotheque.afficheMessage("le livre n'existe pas", 0);
+                    }
+                    break;
+                case 0:
+                    VueTpBibliotheque.afficheMessage("Merci et à bientôt", 1);
+                    fin = true;
+                    break;
+                default:
+                    VueTpBibliotheque.afficheMessage("Erreur ! saisie incorrect ", 0);
+                    break;
+
+            }
+
+        } while (!fin) ;
+}
 
     /*
     private void controleurChoixMenu() throws SaisieException {
@@ -76,26 +158,36 @@ public class Main {
     }
     */
 
-    public static void creationBibliotheque() throws SaisieException {
+        public static void creationBibliotheque() throws SaisieException {
 
-        Livre livre1 = new Livre ("Mythics","Jean Valjean",
-                1,978-3-986-74186-1, true);
-        Livre livre2 = new Livre ("L'invention","James Pataguel",
-                1,978-3-196-74186-2, true);
-        Livre livre3 = new Livre ("Le loup de Stan","Ibrahim Joupe",
-                1,978-3-986-74186-3, true);
-        Livre livre4 = new Livre ("Savoir coder","Céline Pasmoi",
-                1,978-3-986-74186-4, true);
-        Livre livre5 = new Livre ("Les Stroumpfs","Jean-Michel Lebleu",
-                1,978-3-986-74186-5, true);
-        Livre livre6 = new Livre ("Les grands classique","Nathalie Chibani",
-                1,978-3-986-48716-6, true);
-        Livre livre7 = new Livre ("Idée déco","Léonce Granduc",
-                1,978-3-986-74186-7, true);
-        Livre livre8 = new Livre ("Nancy Plage","Friedrisch Schneider",
-                1,978-3-986-74186-8, true);
-        Livre livre9 = new Livre ("Les dictées","Bernard Pivot",
-                1,978-3-986-28716-9, true);
+            Livre livre1 = new Livre ("Mythics","Jean Valjean",
+                    1,"978-3-986-74186-1", true);
+            Livre livre2 = new Livre ("L'invention","James Pataguel",
+                    1,"978-3-196-74186-2", true);
+            Livre livre3 = new Livre ("Le loup de Stan","Ibrahim Joupe",
+                    1,"978-3-986-74186-3", true);
+            Livre livre4 = new Livre ("Savoir coder","Céline Pasmoi",
+                    1,"978-3-986-74186-4", true);
+            Livre livre5 = new Livre ("Les Stroumpfs","Jean-Michel Lebleu",
+                    1,"978-3-986-74186-5", true);
+            Livre livre6 = new Livre ("Les grands classique","Nathalie Chibani",
+                    1,"978-3-986-48716-6", true);
+            Livre livre7 = new Livre ("Idée déco","Léonce Granduc",
+                    1,"978-3-986-74186-7", true);
+            Livre livre8 = new Livre ("Nancy Plage","Friedrisch Schneider",
+                    1,"978-3-986-74186-8", true);
+            Livre livre9 = new Livre ("Les dictées","Bernard Pivot",
+                    1,"978-3-986-28716-9", true);
+
+            Livre.livresList.add(livre1);
+            Livre.livresList.add(livre2);
+            Livre.livresList.add(livre3);
+            Livre.livresList.add(livre4);
+            Livre.livresList.add(livre5);
+            Livre.livresList.add(livre6);
+            Livre.livresList.add(livre7);
+            Livre.livresList.add(livre8);
+            Livre.livresList.add(livre9);
 
 
         /*
@@ -118,7 +210,7 @@ public class Main {
          */
         }
     }
-            // creation d'un livre
+// creation d'un livre
 //        private static void controleur
 //            controleurRechercheAbonne()
 //                    controleurRechercheLivre

@@ -11,8 +11,7 @@ public class Bibliothecaire extends Utilisateur{
     private int identifiant;  // peut on faire un truc genre HashMap pour 1 nom associé a 1 int identifiant
     private String REGEX_IDENTITE;
 
-    public List<Bibliothecaire> listeBibliothecaire =  new ArrayList<>();
-
+    public static List<Bibliothecaire> listeBibliothecaire =  new ArrayList<>();
 
     public Bibliothecaire(String nom, String prenom, int identifiant) throws SaisieException {
         super (nom, prenom);
@@ -51,11 +50,13 @@ public class Bibliothecaire extends Utilisateur{
             this.identifiant = identifiant;
         }
     }
-    public void afficherListeBibliothecaire() throws SaisieException {
+    public static void afficherListeBibliothecaire() throws SaisieException {
         if (listeBibliothecaire.isEmpty()||listeBibliothecaire.size()==0) {
             throw new SaisieException("La liste est vide, veuillez ajouter un agent à la liste. ");
         } else {
-            afficherListeBibliothecaire();
+            for (int i = 0; i < listeBibliothecaire.size()-1; i++) {
+                System.out.println(listeBibliothecaire.get(i).toString());
+            }
         }
     }
 }
