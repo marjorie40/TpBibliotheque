@@ -4,8 +4,6 @@ import exception.SaisieException;
 
 import java.time.LocalDate;
 
-
-
 public class Pret {
 
     private LocalDate debut;
@@ -16,7 +14,6 @@ public class Pret {
     public LocalDate getDebut() {
         return debut;
     }
-
     public void setDebut(LocalDate debut) {
         this.debut = debut;
     }
@@ -24,7 +21,6 @@ public class Pret {
     public LocalDate getFin() {
         return fin;
     }
-
     public void setFin(LocalDate fin) {
         this.fin = fin;
     }
@@ -32,7 +28,6 @@ public class Pret {
     public Abonne getAbonne() {
         return abonne;
     }
-
     public void setAbonne(Abonne abonne) {
         this.abonne = abonne;
     }
@@ -40,7 +35,6 @@ public class Pret {
     public Livre getLivre() {
         return livre;
     }
-
     public void setLivre(Livre livre) {
         this.livre = livre;
     }
@@ -53,5 +47,11 @@ public class Pret {
 
     }
 
-
+    @Override
+    public String toString() {
+        return "L'abonné" +this.getAbonne() +
+                "à emprunté l'ouvrage : " + this.getLivre() +
+                " de " + this.getDebut() +
+                "jusqu'au " + this.getFin();
+    }
 }
