@@ -20,7 +20,8 @@ public class Utilisateur {  //  ?? abstract class
 
     public void setNom(String nom) throws SaisieException {
         if (nom == null || nom.isEmpty() || !nom.matches(REGEX_IDENTITE)) {
-            throw new SaisieException("La saisie du Nom est incorrecte, veuillez reesayer. ");
+            throw new SaisieException("La saisie du Nom est incorrecte, " +
+                    "veuillez recommencer entièrement la saisie de données. ");
         } else {
             this.nom = nom;
         }
@@ -31,7 +32,8 @@ public class Utilisateur {  //  ?? abstract class
 
     public void setPrenom(String prenom) throws SaisieException {
         if (prenom == null || prenom.isEmpty() || !prenom.matches(REGEX_IDENTITE)) {
-            throw new SaisieException("La saisie du Prénom est incorrecte, veuillez reesayer. ");
+            throw new SaisieException("La saisie du Prénom est incorrecte, " +
+                    "veuillez recommencer entièrement la saisie de données. ");
         } else {
             this.prenom = prenom;
         }

@@ -62,7 +62,7 @@ public class Main {
                                     VueTpBibliotheque.getNom(),
                                     VueTpBibliotheque.getPrenom(),
                                     VueTpBibliotheque.getEmail(),
-                                    1,
+                                    VueTpBibliotheque.getDay(),
                                     VueTpBibliotheque.getMonth(),
                                     VueTpBibliotheque.getYear());  // A REVOIR :  les LocalDate pour une saisie
 
@@ -103,13 +103,21 @@ public class Main {
                     break;
                 case 3:
                     // VUE
-                    VueTpBibliotheque.rechercheParIsbn();
+                    VueTpBibliotheque.demandeCreationPret();
                     // CONTROLEUR
-                    Livre tempo = Livre.rechercheParIsbn(VueTpBibliotheque.getIsbn());
+                    Livre tempo = Livre.rechercheParTitre(VueTpBibliotheque.getIsbn());
                     if (tempo != null) {
                         VueTpBibliotheque.afficheMessage(tempo.toString(), 1);
                     } else {
-                        VueTpBibliotheque.afficheMessage("le livre n'existe pas", 0);
+                        VueTpBibliotheque.afficheMessage("Le livre est inconnu ou indisponible", 0);
+                    }
+
+                    Abonne abo = Abonne.rechercheParNom(VueTpBibliotheque.getNom());
+                    if (abo != null) {
+                        VueTpBibliotheque.afficheMessage(abo.toString(), 1);
+                    } else {
+                        VueTpBibliotheque.afficheMessage("L'abonné est inconnu, " +
+                                "veuillez le créer en selectionnant [1] depuis le menu. ",0);
                     }
                     break;
                 case 4:
@@ -117,6 +125,20 @@ public class Main {
                     break;
                 case 5 :
                     VueTpBibliotheque.vueAffichageLivres(Livre.livresList);
+                    break;
+                case 6 :
+                    VueTpBibliotheque.affichagePret(Pret.listPrets);
+                    break;
+                case 7 :  // l'option cachée
+                    // VUE
+                    VueTpBibliotheque.rechercheParIsbn();
+                    // CONTROLEUR
+                    Livre oeuvre = Livre.rechercheParIsbn(VueTpBibliotheque.getIsbn());
+                    if (oeuvre != null) {
+                        VueTpBibliotheque.afficheMessage(oeuvre.toString(), 1);
+                    } else {
+                        VueTpBibliotheque.afficheMessage("le livre n'existe pas", 0);
+                    }
                     break;
 
                 case 0:
@@ -126,7 +148,6 @@ public class Main {
                 default:
                     VueTpBibliotheque.afficheMessage("Erreur ! saisie incorrect ", 0);
                     break;
-
             }
 
         } while (!fin);
@@ -230,6 +251,15 @@ public class Main {
         Abonne.listAbonnes.add(abonne2);
         Abonne.listAbonnes.add(abonne3);
         Abonne.listAbonnes.add(abonne4);
+
+        Pret pret1 = new Pret (1, abonne2, livre3, LocalDate.now(), LocalDate.now().plusDays(7));
+        Pret pret2 = new Pret (2,abonne4,livre6,LocalDate.now(),LocalDate.now().plusDays(7));
+        Pret pret3 = new Pret (3,abonne2,livre2,LocalDate.now(),LocalDate.now().plusDays(7));
+
+        Pret.listPrets.add(pret1);
+        Pret.listPrets.add(pret2);
+        Pret.listPrets.add(pret3);
+
         /*System.out.println(abonnes);
 
         if (abonnes.contains("Aline")) {

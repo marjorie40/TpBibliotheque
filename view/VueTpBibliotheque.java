@@ -96,20 +96,19 @@ public class VueTpBibliotheque {
         for (int i = 0; i < Livre.livresList.size(); i++) {
 
             System.out.println(Livre.livresList.get(i).toString());
-
         }
-
     }
 
     /**
-     * AFFICHER LES PRETS
-     * @param prets ArrayList
+     * AFFICHER LA LISTE DES PRETS
+     * @param listPrets ArrayList
      */
-    public static void affichagePret (ArrayList <Pret> prets) {
+    public static void affichagePret (ArrayList <Pret> listPrets) {
 
         System.out.println("******** Affichage des prêts : ********");
-        for (Pret pret : prets) {
-            System.out.println(pret);
+
+        for (int i = 0; i<listPrets.size(); i++) {
+            System.out.println(Pret.listPrets.get(i).toString());
         }
     }
 
@@ -172,6 +171,25 @@ public class VueTpBibliotheque {
     }
 
     /**
+     * DEMANDE DE CREATION D'UN PRET
+     */
+    public static void demandeCreationPret() {
+        String emprunteur;
+        String emprunt;
+
+        System.out.println(" *** Création d'un prêt ***");
+        System.out.println("Merci de saisir le nom de l'abonné : "); // ideal recherche fenetre comboBox
+        emprunteur = sc.nextLine();
+        System.out.println("Merci de saisir le titre de l'ouvrage : ");
+        emprunt = sc.nextLine();
+        System.out.println("Merci de saisir l'isbn ?");
+        isbn = sc.nextLine();
+        afficheMessage("Merci de saisir la quantité ?", 1);
+        quantite = sc.nextInt();
+        sc.nextLine(); // vider le buffer
+    }
+
+    /**
      * DEMANDE DE CREATION D'UN ABONNE
      */
     public static void demandeCreationAbonne() {
@@ -185,9 +203,9 @@ public class VueTpBibliotheque {
         //System.out.println("Merci de saisir la date de l'inscription. Tout d'abord, le jour (de 1 à 31) : "); // a revoir logique type,methode pour la date inscription
         //int day = sc.nextInt();
         System.out.println("Merci de saisir le mois (de 1 à 12) : ");
-        int month = sc.nextInt();
+        month = sc.nextInt();
         System.out.println("Merci de saisir l'année (accepté jusqu'à 2025) : ");
-        int year = sc.nextInt();
+        year = sc.nextInt();
         System.out.println("La date d'inscription de l'abonné est : " + day +  "/" + month + "/" + year + " ? ");
         sc.nextLine(); // vider le buffer
     }
@@ -219,9 +237,10 @@ public class VueTpBibliotheque {
         System.out.println("3 - Recherche par isbn");
         System.out.println("4 - Afficher la liste d'abonnees");
         System.out.println("5 - Afficher les livres");
+        System.out.println("6 - Afficher les prêts");
         System.out.println("0 - Quitter");
 
-        System.out.println("Merci de donner votre choix ? [0-5] ");
+        System.out.println("Merci de donner votre choix ? [0-6] ");
         int choix = sc.nextInt();
         sc.nextLine();
         return choix;

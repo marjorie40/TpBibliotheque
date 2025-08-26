@@ -15,8 +15,8 @@ public class Abonne extends Utilisateur {
     private String prenom;
     private String email;
     private int year;
-    private int month = 1;
-    private int day;
+    private int month ;
+    private int day = 1;
     private String pret;
     private String REGEX_Email = "^[a-zA-Z0-9._+-]+[@]+[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$";
     //private String newId = generateId();
@@ -31,9 +31,9 @@ public class Abonne extends Utilisateur {
     public Abonne(String nom, String prenom, String email, int day, int month, int year) throws SaisieException {
         super(nom, prenom);
         this.setEmail(email);
-        this.setDay (1);  // je propose que les inscriptions sont prises en compte au 1er jour du mois en cours
-        this.setMonth (1);  // besoin d'initialiser ICI à 1 pour ne pas rentrer dans l'exception
-        this.setYear(1801); //LocalDate.parse(dateInscription, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        this.setDay(1);  // je propose que les inscriptions sont prises en compte au 1er jour du mois en cours
+        this.setMonth(month);  // besoin d'initialiser ICI à 1 pour ne pas rentrer dans l'exception
+        this.setYear(year); //LocalDate.parse(dateInscription, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
 
@@ -47,7 +47,8 @@ public class Abonne extends Utilisateur {
 
     public void setEmail(String email) throws SaisieException {
         if (email == null || email.isEmpty() || !email.matches(REGEX_Email)) {
-            throw new SaisieException("Votre adresse mail est invalide, veuillez la saisir anouveau.");
+            throw new SaisieException("Votre adresse mail est invalide, votre abonné n'est pas créé, " +
+                    " veuillez recréer votre abonné avec un email valide.");
         } else {
             this.email = email.trim().toLowerCase();
         }
@@ -57,8 +58,8 @@ public class Abonne extends Utilisateur {
         return this.day;
     }
     public void setDay(int day) throws SaisieException {
-        if (day != 1 || day == 0 ) {
-            throw new SaisieException(" Le jour entré n'est pas valide, veuillez saisir 1. ");
+        if (day != 1  ) {
+            throw new SaisieException(" Le jour entré n'est pas valide, votre abonné n'est pas créé, veuillez saisir 1. ");
         } else {
             this.day = day;
         }
@@ -68,9 +69,9 @@ public class Abonne extends Utilisateur {
     }
 
     public void setMonth(int month) throws SaisieException {
-        if (month <=0 || month > 12) {
-            throw new SaisieException("La valeur saisie pour le mois n'est pas valide, " +
-                    "veuillez saisir un nombre entre 1 et 12. ");
+        if (month < 1 || month > 12) {
+            throw new SaisieException("La valeur saisie pour le mois n'est pas valide, votre abonné n'est pas créé, " +
+                    "veuillez recréer votre abonné et saisir un mois entre 1 et 12. ");
         } else {
             this.month = month;
         }
@@ -79,9 +80,9 @@ public class Abonne extends Utilisateur {
         return this.year;
     }
     public void setYear(int year) throws SaisieException {
-        if (year < 1800 || year > 2025) {
-            throw new SaisieException("L'année saisie n'est pas valide, " +
-                    "veuillez resaisir une année entre 1800 et 2025. ");
+        if (year > 2025 || year < 1950 ) {
+            throw new SaisieException("L'année saisie n'est pas valide, votre abonné n'est pas créé, " +
+                    "veuillez recréer votre abonné et saisir une année entre 1950 et 2025. ");
         } else {
             this.year = year;
         }
@@ -148,6 +149,6 @@ public class Abonne extends Utilisateur {
         return "Nom : " + this.getNom() +
                 " . Prénom : " + this.getPrenom() +
                 " . Email : " + this.getEmail() +
-                " . Date d'inscription : " + this.getDay() +" / " + this.getMonth() + " / "+ this.getYear() + ".";
+                " . Date d'inscription : " + day +" / " + this.getMonth() + " / "+ this.getYear() + ".";
     }
 }
