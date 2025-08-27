@@ -4,6 +4,7 @@ import exception.SaisieException;
 import model.Abonne;
 import model.Livre;
 import model.Pret;
+import model.PretLivre;
 import view.VueTpBibliotheque;
 
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public class Main {
     public static void main(String[] args) throws SaisieException {
         // le controleur cree le monde
         creationBibliotheque();
+
         // le controleur demande a la vue d'afficher les livres
         // VueTpBibliotheque.vueAffichageLivres(Livre.livresList);
 
@@ -79,7 +81,7 @@ public class Main {
                 case 2:
                     boolean saisieErreur = true;
                     do {
-                        // VUE
+                        // Vue
 
                         VueTpBibliotheque.demandeCreationLivre();
                         // CONTROLEUR
@@ -102,10 +104,35 @@ public class Main {
                             "merci de choisir une nouvelle action [1-6] ou de sortir du programme [0] ", 1);
                     break;
                 case 3:
-                    // VUE
+//                    // CREATION PRET avec recuperation d' OBJET plutot que saisie de STRING -- pas Ops
+//                    boolean erreur = true;
+//                    do {
+//                        VueTpBibliotheque.demandeCreationPret();
+//
+//                        try {
+//                            PretLivre pretLivre = new PretLivre(
+//                                    PretLivre.getPretLivre().get( int identifiantPret),  // recuperer l'index+1 en identifiantPret
+//                            VueTpBibliotheque.getNomAbonne(),
+//                                    VueTpBibliotheque.getTitreLivre(),
+//                                    LocalDate.now().parse("dd/MM/yyyy"),
+//                                    LocalDate.now().plusDays(7));
+//
+//                            PretLivre.pretLivres.add(pretLivre);
+//                            erreur = false;
+//                        } catch (SaisieException e) {
+//                            VueTpBibliotheque.afficheMessage("Erreur !" + e.getMessage(), 0);
+//                        }
+//
+//                    } while (erreur);
+//
+//                    VueTpBibliotheque.afficheMessage("le prêt de ce livre est bien créé, " +
+//                            "merci de choisir une nouvelle action [1-6] ou de sortir du programme [0] ", 1);
+//
+//                break;
+                    // CREATION PRET avec saisie de STRING plutot que recuperation d' OBJET
                     VueTpBibliotheque.demandeCreationPret();
                     // CONTROLEUR
-                    Livre tempo = Livre.rechercheParTitre(VueTpBibliotheque.getIsbn());
+                    Livre tempo = Livre.rechercheParTitre(VueTpBibliotheque.getTitre());
                     if (tempo != null) {
                         VueTpBibliotheque.afficheMessage(tempo.toString(), 1);
                     } else {
@@ -127,9 +154,9 @@ public class Main {
                     VueTpBibliotheque.vueAffichageLivres(Livre.livresList);
                     break;
                 case 6 :
-                    VueTpBibliotheque.affichagePret(Pret.listPrets);
+                    VueTpBibliotheque.affichagePret(Pret.listPrets);  // affichagePret versus affichePretLivre dans Vue
                     break;
-                case 7 :  // l'option cachée
+                case 911 :  // l'option cachée
                     // VUE
                     VueTpBibliotheque.rechercheParIsbn();
                     // CONTROLEUR
@@ -137,7 +164,7 @@ public class Main {
                     if (oeuvre != null) {
                         VueTpBibliotheque.afficheMessage(oeuvre.toString(), 1);
                     } else {
-                        VueTpBibliotheque.afficheMessage("le livre n'existe pas", 0);
+                        VueTpBibliotheque.afficheMessage("Le livre n'existe pas ou votre saisie est incorrecte", 0);
                     }
                     break;
 
@@ -153,61 +180,6 @@ public class Main {
         } while (!fin);
     }
 
-    /*
-    private void controleurChoixMenu() throws SaisieException {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("> Votre Choix [1-6] ou [0] pour quitter :");
-
-        Boolean fin = false;
-        while (fin == false) {
-            int selection = sc.nextInt();
-            switch (selection) {
-                case 0:
-                    // fin de l'application.
-                    fin = true;
-                    System.out.println("Merci et à bientôt");
-                    //  System.exit(0);
-                    break;
-                case 1:
-                    // appel de la vue pour la création
-                    VueTpBibliotheque.vueCreation();
-                    // Création d'une personne
-                    controleurCreationPersonnage();
-
-                case 2:
-                    // appel de la vue pour la création
-                    VueTpBibliotheque.vueRechercheParTitre();
-                    // recherche de la personne par son nom
-                    Personne p = controleurRecherchePersonne(VueMMORPG.getNom());
-                    // appel de la vue pour afficher cette personne
-                    VueTpBibliotheque.vueAffichageAbonnes(abonnes);
-
-                case 3:
-
-                case 4:
-                    // appel de la vue en lui donnant la liste d'abonnes
-                    VueTpBibliotheque.vueAffichageAbonnes(Abonne.getAbonnes());
-                    break;
-
-                case 5:
-                    // appel de la vue en lui donnant la liste de livres
-                    VueTpBibliotheque.vueAffichageLivres(Livre.getLivres());
-                    break;
-
-                case 6:
-                    // appel de la vue en lui donnant la liste des prets
-                    VueTpBibliotheque.vueAffichagePret(Pret.getPrets());
-                    break;
-
-                default:
-                    // choix en erreur
-                    System.err.println("! Choix incorrect ! [0-6] !");
-                    break;
-
-            }
-        }
-    }
-    */
 
     public static void creationBibliotheque() throws SaisieException {
 
@@ -252,9 +224,9 @@ public class Main {
         Abonne.listAbonnes.add(abonne3);
         Abonne.listAbonnes.add(abonne4);
 
-        Pret pret1 = new Pret (1, abonne2, livre3, LocalDate.now(), LocalDate.now().plusDays(7));
-        Pret pret2 = new Pret (2,abonne4,livre6,LocalDate.now(),LocalDate.now().plusDays(7));
-        Pret pret3 = new Pret (3,abonne2,livre2,LocalDate.now(),LocalDate.now().plusDays(7));
+        Pret pret1 = new Pret (1, "Testard", "les castors", LocalDate.now(), LocalDate.now().plusDays(7));
+        Pret pret2 = new Pret (2,"Boulot","Le petit Prince",LocalDate.now(),LocalDate.now().plusDays(7));
+        Pret pret3 = new Pret (3,"abonne2","livre2",LocalDate.now(),LocalDate.now().plusDays(7));
 
         Pret.listPrets.add(pret1);
         Pret.listPrets.add(pret2);
@@ -268,9 +240,3 @@ public class Main {
         }*/
     }
 }
-// creation d'un livre
-//        private static void controleur
-//            controleurRechercheAbonne()
-//                    controleurRechercheLivre
-//                            controleurRecherchePret
-

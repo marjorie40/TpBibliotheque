@@ -98,8 +98,8 @@ public class Livre {
     public static Livre rechercheParTitre(String titre) {
 
         for (int index = 0; index < livresList.size(); index++) {
-            if (titre.trim().equals(livresList.get(index).getIsbn().trim())) {  // && etatLivre = true
-                // ?? se traduit : equals recupere index de l'ISBN nettoyé dans -livresList- ?
+            if (titre.trim().equals(livresList.get(index).getTitre().trim())) {  // && etatLivre = true
+                // ?? se traduit : equals recupere index du titre nettoyé dans -livresList- ?
                 return livresList.get(index);
             }
         }

@@ -1,11 +1,9 @@
 package view;
 
 import exception.ExceptionDate;
-import model.Abonne;
-import model.Livre;
-import model.Bibliothecaire;
-import model.Pret;
+import model.*;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -25,6 +23,8 @@ public class VueTpBibliotheque {
     private static int day;
     private static int month;
     private static int year;
+    private static String nomAbonne;
+    private static String titreLivre;
 
     //public static LocalDate dateInscription = LocalDate.now(ZoneId.of("dd-MM-yyyy"));
     //LocalDate inscription = new LocalDate (int year, int month, int year);
@@ -65,6 +65,12 @@ public class VueTpBibliotheque {
     public static int getYear () {
         return year;
     }
+    public static String getNomAbonne() {
+        return nomAbonne;
+    }
+    public static String getTitreLivre() {
+        return titreLivre;
+    }
 
     //public static LocalDate getDateInscription() {
         //return getDateInscription (); }   // généré par IDE : correct ????
@@ -100,9 +106,9 @@ public class VueTpBibliotheque {
     }
 
     /**
-     * AFFICHER LA LISTE DES PRETS
+     * AFFICHER LA LISTE DES PRETS avec PRET
      * @param listPrets ArrayList
-     */
+    */
     public static void affichagePret (ArrayList <Pret> listPrets) {
 
         System.out.println("******** Affichage des prêts : ********");
@@ -111,6 +117,21 @@ public class VueTpBibliotheque {
             System.out.println(Pret.listPrets.get(i).toString());
         }
     }
+
+//    /**
+//     * AFFICHAGE LISTE DE PRETS avec PRETLIVRE
+//     * @param listPretLivre Arraylist
+//     */
+//
+//    public static void affichePretLivre(ArrayList<PretLivre> listPretLivre) {
+//
+//        System.out.println("******** Affichage des prêts : ********");
+//
+//        for (int i = 0; i < listPretLivre.size(); i++) {
+//            System.out.println(listPretLivre.get(i).toString());
+//
+//        }
+//    }
 
     /**
      * RECHERCHER UN ABONNE PAR EMAIL
@@ -174,18 +195,13 @@ public class VueTpBibliotheque {
      * DEMANDE DE CREATION D'UN PRET
      */
     public static void demandeCreationPret() {
-        String emprunteur;
-        String emprunt;
 
         System.out.println(" *** Création d'un prêt ***");
         System.out.println("Merci de saisir le nom de l'abonné : "); // ideal recherche fenetre comboBox
-        emprunteur = sc.nextLine();
+        nomAbonne = sc.nextLine().trim().toLowerCase();
         System.out.println("Merci de saisir le titre de l'ouvrage : ");
-        emprunt = sc.nextLine();
-        System.out.println("Merci de saisir l'isbn ?");
-        isbn = sc.nextLine();
-        afficheMessage("Merci de saisir la quantité ?", 1);
-        quantite = sc.nextInt();
+        titreLivre = sc.nextLine().trim().toLowerCase();
+        System.out.println("Voici votre demande de prêt : ");
         sc.nextLine(); // vider le buffer
     }
 
@@ -221,8 +237,8 @@ public class VueTpBibliotheque {
         } else {
             System.out.println(message);
         }
-
     }
+
     /**
      * AFFICHER LE MENU DE SELECTION ET CAPTER LE CHOIX DE L'UTILISATEUR
      * @return choix utilisateur
@@ -234,7 +250,7 @@ public class VueTpBibliotheque {
         System.out.println("***********************************************************");
         System.out.println("1 - Créer un abonné");
         System.out.println("2 - Créer un livre");
-        System.out.println("3 - Recherche par isbn");
+        System.out.println("3 - Créer un prêt");
         System.out.println("4 - Afficher la liste d'abonnees");
         System.out.println("5 - Afficher les livres");
         System.out.println("6 - Afficher les prêts");
@@ -245,6 +261,9 @@ public class VueTpBibliotheque {
         sc.nextLine();
         return choix;
     }
+
+
+
 
     /* public static int saisieDateInscription() {
         int jour =1;
