@@ -19,6 +19,7 @@ public class Abonne extends Utilisateur {
     private int day = 1;
     private String pret;
     private String REGEX_Email = "^[a-zA-Z0-9._+-]+[@]+[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$";
+    private ArrayList<PretLivre> listePretLivres;
     //private String newId = generateId();
 
 
@@ -28,12 +29,22 @@ public class Abonne extends Utilisateur {
             return listAbonnes;
     }
 
-    public Abonne(String nom, String prenom, String email, int day, int month, int year) throws SaisieException {
+    public ArrayList<PretLivre> getListePretLivres () {
+        return listePretLivres;
+    }
+
+    public Abonne(String nom, String prenom, String email, int day, int month, int year) throws SaisieException {  //constructeur pour la création abo
         super(nom, prenom);
         this.setEmail(email);
         this.setDay(1);  // je propose que les inscriptions sont prises en compte au 1er jour du mois en cours
         this.setMonth(month);  // besoin d'initialiser ICI à 1 pour ne pas rentrer dans l'exception
         this.setYear(year); //LocalDate.parse(dateInscription, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    public Abonne (String nom, String prenom, String email,ArrayList<PretLivre> listePretLivres ) throws SaisieException {
+        super(nom, prenom);
+        this.setEmail(email);
+        this.listePretLivres = listePretLivres;
     }
 
 

@@ -9,22 +9,22 @@ import java.util.Collection;
 
 public class PretLivre {
 
-    private int identifiantPret;
+    private int identifiantPret = 0;
     private Abonne abonne;
     private Livre livre;
     private LocalDate debut;
     private LocalDate fin;
     DateTimeFormatter calendar = DateTimeFormatter.ofPattern("dd/MM/yyyy");  //  ?? où le placer et rester public ou private
 
+    public static ArrayList<PretLivre> pretLivres = new ArrayList<PretLivre>();
+
     public PretLivre(int identifiantPret, Abonne abonne, Livre livre, LocalDate debut, LocalDate fin) throws SaisieException {
-        this.setIdentifiantPret(identifiantPret);
+        this.setIdentifiantPret (identifiantPret++);
         this.setAbonne(abonne);
         this.setLivre(livre);
         this.debut = LocalDate.now();
         this.fin = LocalDate.now().plusDays(7);
     }
-
-    public static ArrayList<PretLivre> pretLivres = new ArrayList<PretLivre>();
 
     public int getIdentifiantPret() {
         return this.identifiantPret;
@@ -63,11 +63,14 @@ public class PretLivre {
         }
     }
 
-    public static ArrayList<PretLivre> getPretLivre() throws SaisieException {
+    public static ArrayList<PretLivre> getPretLivre() {
+        return pretLivres;
+    }
+    public void setPretLivre(ArrayList<PretLivre> pretLivres) throws SaisieException {
         if (PretLivre.getPretLivre() == null) {
-            throw new SaisieException("La liste de prêts n'existe pas. ");
+            throw new SaisieException("La liste de prêt n'existe pas");
         } else {
-            return PretLivre.getPretLivre();
+            this.pretLivres = pretLivres;
         }
     }
 

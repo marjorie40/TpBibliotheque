@@ -25,6 +25,8 @@ public class VueTpBibliotheque {
     private static int year;
     private static String nomAbonne;
     private static String titreLivre;
+    private static Abonne abonne;
+    private static Livre livre;
 
     //public static LocalDate dateInscription = LocalDate.now(ZoneId.of("dd-MM-yyyy"));
     //LocalDate inscription = new LocalDate (int year, int month, int year);
@@ -71,6 +73,13 @@ public class VueTpBibliotheque {
     public static String getTitreLivre() {
         return titreLivre;
     }
+    public static Abonne getAbonne() {
+        return abonne;
+    }
+    public static Livre getLivre() {
+        return livre;
+    }
+
 
     //public static LocalDate getDateInscription() {
         //return getDateInscription (); }   // généré par IDE : correct ????
@@ -105,33 +114,33 @@ public class VueTpBibliotheque {
         }
     }
 
-    /**
-     * AFFICHER LA LISTE DES PRETS avec PRET
-     * @param listPrets ArrayList
-    */
-    public static void affichagePret (ArrayList <Pret> listPrets) {
-
-        System.out.println("******** Affichage des prêts : ********");
-
-        for (int i = 0; i<listPrets.size(); i++) {
-            System.out.println(Pret.listPrets.get(i).toString());
-        }
-    }
-
 //    /**
-//     * AFFICHAGE LISTE DE PRETS avec PRETLIVRE
-//     * @param listPretLivre Arraylist
-//     */
-//
-//    public static void affichePretLivre(ArrayList<PretLivre> listPretLivre) {
+//     * AFFICHER LA LISTE DES PRETS avec PRET
+//     * @param listPrets ArrayList
+//    */
+//    public static void affichagePret (ArrayList <Pret> listPrets) {
 //
 //        System.out.println("******** Affichage des prêts : ********");
 //
-//        for (int i = 0; i < listPretLivre.size(); i++) {
-//            System.out.println(listPretLivre.get(i).toString());
-//
+//        for (int i = 0; i<listPrets.size(); i++) {
+//            System.out.println(Pret.listPrets.get(i).toString());
 //        }
 //    }
+
+    /**
+     * AFFICHAGE LISTE DE PRETS avec PRETLIVRE
+     * @param listPretLivre Arraylist
+     */
+
+    public static void affichePretLivre(ArrayList<PretLivre> listPretLivre) {
+
+        System.out.println("******** Affichage des prêts : ********");
+
+        for (int i = 0; i < listPretLivre.size(); i++) {
+            System.out.println(listPretLivre.get(i).toString());
+
+        }
+    }
 
     /**
      * RECHERCHER UN ABONNE PAR EMAIL
@@ -163,6 +172,7 @@ public class VueTpBibliotheque {
         System.out.println("Rechercher par titre");
         System.out.println("Saisir le titre de l'ouvrage : ");
         titre = sc.nextLine().toLowerCase().trim();
+
     }
 
     /**
@@ -199,9 +209,24 @@ public class VueTpBibliotheque {
         System.out.println(" *** Création d'un prêt ***");
         System.out.println("Merci de saisir le nom de l'abonné : "); // ideal recherche fenetre comboBox
         nomAbonne = sc.nextLine().trim().toLowerCase();
+        for (Abonne abonne : Abonne.listAbonnes) {
+            if (nomAbonne.equals(Abonne.getNom())) {
+                Abonne resultatRecherche = abonne;
+                System.out.println(abonne.toString());
+                break; // ?? nécessaire ? comment stopper la recherche (pas tout parcourir)
+            } else {
+                System.out.println("L'abonné n'existe pas");
+            }
+        }
         System.out.println("Merci de saisir le titre de l'ouvrage : ");
         titreLivre = sc.nextLine().trim().toLowerCase();
-        System.out.println("Voici votre demande de prêt : ");
+        if (titreLivre.equals(Livre.rechercheParTitre(""))){
+            Livre resultatRecherche = Livre.rechercheParTitre(titre);
+            System.out.println(resultatRecherche.toString());  // recherche par titre utilisé mais est void donc pas de return titre...
+        } else {
+            System.out.println(" Le livre n'existe pas ou n'est pas disponible. ");
+        }
+        System.out.println("Voici votre demande de prêt : " + abonne.toString() + livre.toString());
         sc.nextLine(); // vider le buffer
     }
 
@@ -251,7 +276,7 @@ public class VueTpBibliotheque {
         System.out.println("1 - Créer un abonné");
         System.out.println("2 - Créer un livre");
         System.out.println("3 - Créer un prêt");
-        System.out.println("4 - Afficher la liste d'abonnees");
+        System.out.println("4 - Afficher la liste d'abonnés");
         System.out.println("5 - Afficher les livres");
         System.out.println("6 - Afficher les prêts");
         System.out.println("0 - Quitter");

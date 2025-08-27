@@ -66,7 +66,7 @@ public class Main {
                                     VueTpBibliotheque.getEmail(),
                                     VueTpBibliotheque.getDay(),
                                     VueTpBibliotheque.getMonth(),
-                                    VueTpBibliotheque.getYear());  // A REVOIR :  les LocalDate pour une saisie
+                                    VueTpBibliotheque.getYear());  // A REVOIR les LocalDate pour une saisie
 
                             Abonne.listAbonnes.add(abonne);
                             pbErreur = false;
@@ -84,8 +84,7 @@ public class Main {
                         // Vue
 
                         VueTpBibliotheque.demandeCreationLivre();
-                        // CONTROLEUR
-                        // controleur reprend la main - crée l'objet et le stocke
+                        // CONTROLEUR reprend la main - crée l'objet et le stocke
                         try {
                             Livre ouvrage = new Livre(
                                     VueTpBibliotheque.getTitre(),
@@ -104,49 +103,49 @@ public class Main {
                             "merci de choisir une nouvelle action [1-6] ou de sortir du programme [0] ", 1);
                     break;
                 case 3:
-//                    // CREATION PRET avec recuperation d' OBJET plutot que saisie de STRING -- pas Ops
-//                    boolean erreur = true;
-//                    do {
-//                        VueTpBibliotheque.demandeCreationPret();
-//
-//                        try {
-//                            PretLivre pretLivre = new PretLivre(
-//                                    PretLivre.getPretLivre().get( int identifiantPret),  // recuperer l'index+1 en identifiantPret
-//                            VueTpBibliotheque.getNomAbonne(),
-//                                    VueTpBibliotheque.getTitreLivre(),
-//                                    LocalDate.now().parse("dd/MM/yyyy"),
-//                                    LocalDate.now().plusDays(7));
-//
-//                            PretLivre.pretLivres.add(pretLivre);
-//                            erreur = false;
-//                        } catch (SaisieException e) {
-//                            VueTpBibliotheque.afficheMessage("Erreur !" + e.getMessage(), 0);
-//                        }
-//
-//                    } while (erreur);
-//
-//                    VueTpBibliotheque.afficheMessage("le prêt de ce livre est bien créé, " +
-//                            "merci de choisir une nouvelle action [1-6] ou de sortir du programme [0] ", 1);
-//
-//                break;
-                    // CREATION PRET avec saisie de STRING plutot que recuperation d' OBJET
-                    VueTpBibliotheque.demandeCreationPret();
-                    // CONTROLEUR
-                    Livre tempo = Livre.rechercheParTitre(VueTpBibliotheque.getTitre());
-                    if (tempo != null) {
-                        VueTpBibliotheque.afficheMessage(tempo.toString(), 1);
-                    } else {
-                        VueTpBibliotheque.afficheMessage("Le livre est inconnu ou indisponible", 0);
-                    }
+                    // CREATION PRET avec recuperation d'OBJET plutot que saisie de STRING -- pas Ops
+                    boolean erreur = true;
+                    do {
+                        VueTpBibliotheque.demandeCreationPret();
 
-                    Abonne abo = Abonne.rechercheParNom(VueTpBibliotheque.getNom());
-                    if (abo != null) {
-                        VueTpBibliotheque.afficheMessage(abo.toString(), 1);
-                    } else {
-                        VueTpBibliotheque.afficheMessage("L'abonné est inconnu, " +
-                                "veuillez le créer en selectionnant [1] depuis le menu. ",0);
-                    }
-                    break;
+                        try {
+                            PretLivre pretLivre = new PretLivre(
+                                    1, // recuperer l'index+1 en identifiantPret
+                                    VueTpBibliotheque.getNomAbonne(),
+                                    VueTpBibliotheque.getTitreLivre(),
+                                    LocalDate.now().parse("dd/MM/yyyy"),
+                                    LocalDate.now().plusDays(7));
+
+                            PretLivre.pretLivres.add(pretLivre);
+                            erreur = false;
+                        } catch (SaisieException e) {
+                            VueTpBibliotheque.afficheMessage("Erreur !" + e.getMessage(), 0);
+                        }
+
+                    } while (erreur);
+
+                    VueTpBibliotheque.afficheMessage("le prêt de ce livre est bien créé, " +
+                            "merci de choisir une nouvelle action [1-6] ou de sortir du programme [0] ", 1);
+
+                break;
+//                    // CREATION PRET avec saisie de STRING plutot que recuperation d'OBJET
+//                    VueTpBibliotheque.demandeCreationPret();
+//                    // CONTROLEUR
+//                    Livre tempo = Livre.rechercheParTitre(VueTpBibliotheque.getTitre());
+//                    if (tempo != null) {
+//                        VueTpBibliotheque.afficheMessage(tempo.toString(), 1);
+//                    } else {
+//                        VueTpBibliotheque.afficheMessage("Le livre est inconnu ou indisponible", 0);
+//                    }
+//
+//                    Abonne abo = Abonne.rechercheParNom(VueTpBibliotheque.getNom());
+//                    if (abo != null) {
+//                        VueTpBibliotheque.afficheMessage(abo.toString(), 1);
+//                    } else {
+//                        VueTpBibliotheque.afficheMessage("L'abonné est inconnu, " +
+//                                "veuillez le créer en selectionnant [1] depuis le menu. ",0);
+//                    }
+//                    break;
                 case 4:
                     VueTpBibliotheque.vueAffichageAbonnes(Abonne.listAbonnes);
                     break;
@@ -154,7 +153,7 @@ public class Main {
                     VueTpBibliotheque.vueAffichageLivres(Livre.livresList);
                     break;
                 case 6 :
-                    VueTpBibliotheque.affichagePret(Pret.listPrets);  // affichagePret versus affichePretLivre dans Vue
+                    VueTpBibliotheque.affichePretLivre(PretLivre.getPretLivre());  // affichagePret versus affichePretLivre dans Vue
                     break;
                 case 911 :  // l'option cachée
                     // VUE
