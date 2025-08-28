@@ -23,6 +23,8 @@ public class Main {
         // le controleur cree le monde
         creationBibliotheque();
 
+        //System.out.println(Abonne.rechercheParNom("testard")); METHODE FONCTIONNE 280825
+
         // le controleur demande a la vue d'afficher les livres
         // VueTpBibliotheque.vueAffichageLivres(Livre.livresList);
 
@@ -110,9 +112,9 @@ public class Main {
 
                         try {
                             PretLivre pretLivre = new PretLivre(
-                                    1, // recuperer l'index+1 en identifiantPret
-                                    VueTpBibliotheque.getNomAbonne(),
-                                    VueTpBibliotheque.getTitreLivre(),
+                                    0, // recuperer l'index+1 en identifiantPret
+                                    Abonne.rechercheParNom(""),
+                                    Livre.rechercheParTitre(""),
                                     LocalDate.now().parse("dd/MM/yyyy"),
                                     LocalDate.now().plusDays(7));
 
@@ -127,7 +129,7 @@ public class Main {
                     VueTpBibliotheque.afficheMessage("le prêt de ce livre est bien créé, " +
                             "merci de choisir une nouvelle action [1-6] ou de sortir du programme [0] ", 1);
 
-                break;
+                    break;
 //                    // CREATION PRET avec saisie de STRING plutot que recuperation d'OBJET
 //                    VueTpBibliotheque.demandeCreationPret();
 //                    // CONTROLEUR
@@ -149,14 +151,15 @@ public class Main {
                 case 4:
                     VueTpBibliotheque.vueAffichageAbonnes(Abonne.listAbonnes);
                     break;
-                case 5 :
+                case 5:
                     VueTpBibliotheque.vueAffichageLivres(Livre.livresList);
                     break;
-                case 6 :
+                case 6:
                     VueTpBibliotheque.affichePretLivre(PretLivre.getPretLivre());  // affichagePret versus affichePretLivre dans Vue
                     break;
-                case 911 :  // l'option cachée
+                case 911:  // l'option cachée
                     // VUE
+                    VueTpBibliotheque.afficheMessage (" Besoin d'aide ? Knock knock Neo...",0);
                     VueTpBibliotheque.rechercheParIsbn();
                     // CONTROLEUR
                     Livre oeuvre = Livre.rechercheParIsbn(VueTpBibliotheque.getIsbn());
@@ -223,19 +226,12 @@ public class Main {
         Abonne.listAbonnes.add(abonne3);
         Abonne.listAbonnes.add(abonne4);
 
-        Pret pret1 = new Pret (1, "Testard", "les castors", LocalDate.now(), LocalDate.now().plusDays(7));
-        Pret pret2 = new Pret (2,"Boulot","Le petit Prince",LocalDate.now(),LocalDate.now().plusDays(7));
-        Pret pret3 = new Pret (3,"abonne2","livre2",LocalDate.now(),LocalDate.now().plusDays(7));
+        PretLivre pret1 = new PretLivre (1, abonne1, livre6, LocalDate.now(), LocalDate.now().plusDays(7));
+        PretLivre pret2 = new PretLivre (2,abonne3,livre9,LocalDate.now(),LocalDate.now().plusDays(7));
+        PretLivre pret3 = new PretLivre (3,abonne4,livre2,LocalDate.now(),LocalDate.now().plusDays(7));
 
-        Pret.listPrets.add(pret1);
-        Pret.listPrets.add(pret2);
-        Pret.listPrets.add(pret3);
-
-        /*System.out.println(abonnes);
-
-        if (abonnes.contains("Aline")) {
-            System.out.println(Abonne.getAbonnes());
-
-        }*/
+        PretLivre.pretLivres.add(pret1);
+        PretLivre.pretLivres.add(pret2);
+        PretLivre.pretLivres.add(pret3);
     }
 }

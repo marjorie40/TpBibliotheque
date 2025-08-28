@@ -18,7 +18,7 @@ public class Abonne extends Utilisateur {
     private int month ;
     private int day = 1;
     private String pret;
-    private String REGEX_Email = "^[a-zA-Z0-9._+-]+[@]+[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$";
+    private static String REGEX_Email = "^[a-zA-Z0-9._+-]+[@]+[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$";
     private ArrayList<PretLivre> listePretLivres;
     //private String newId = generateId();
 
@@ -48,7 +48,7 @@ public class Abonne extends Utilisateur {
     }
 
 
-    public static void setAbonnes(ArrayList<Abonne> abonnes) {
+    public void setAbonnes(ArrayList<Abonne> abonnes) {
         Abonne.listAbonnes = abonnes;
     }
 
@@ -102,7 +102,7 @@ public class Abonne extends Utilisateur {
     //public String getDateInscription() {
       //  return dateInscription; }
 
-    public static LocalDate getDateInscription(String dateInscription) throws SaisieException {
+    public  LocalDate getDateInscription(String dateInscription) throws SaisieException {
         if (dateInscription == null || dateInscription.isEmpty()) {
             throw new SaisieException(" La date d'inscription est incorrecte,  veillez à respecter le format suivant : jj/mm/aaaa. ");
         } else {

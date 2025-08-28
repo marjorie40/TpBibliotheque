@@ -14,7 +14,7 @@ public class Utilisateur {  //  ?? abstract class
         this.setPrenom(prenom);
     }
 
-    public static String getNom() {
+    public String getNom() {
         return nom;
     }
 

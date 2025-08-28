@@ -9,7 +9,7 @@ import java.util.Collection;
 
 public class PretLivre {
 
-    private int identifiantPret = 0;
+    private static int identifiantPret;
     private Abonne abonne;
     private Livre livre;
     private LocalDate debut;
@@ -19,7 +19,7 @@ public class PretLivre {
     public static ArrayList<PretLivre> pretLivres = new ArrayList<PretLivre>();
 
     public PretLivre(int identifiantPret, Abonne abonne, Livre livre, LocalDate debut, LocalDate fin) throws SaisieException {
-        this.setIdentifiantPret (identifiantPret++);
+        this.setIdentifiantPret (identifiantPret);
         this.setAbonne(abonne);
         this.setLivre(livre);
         this.debut = LocalDate.now();
@@ -85,13 +85,17 @@ public class PretLivre {
             this.debut = LocalDate.parse(LocalDate.now().format(calendar));
         }
     }
+    public static int idPret(){
+        identifiantPret++;
+        return identifiantPret;
+    }
 
 
     @Override
 
     public String toString() {
-        return "Prêt  " + getIdentifiantPret() + " : l'abonné : " + getAbonne().getNom() + getAbonne().getPrenom() +
-                "est en possession de l'ouvrage : " + getLivre().getTitre() +
+        return " Prêt n° " + idPret() + " -- l'abonné : " + getAbonne().getNom()+ " " + getAbonne().getPrenom() +
+                " est en possession de l'ouvrage : " + getLivre().getTitre() +
                 " du " + getDebut() + " jusqu'au *** " + getDebut().plusDays(7) + " ***.";
     }
 

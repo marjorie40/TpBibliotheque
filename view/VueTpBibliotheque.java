@@ -129,15 +129,15 @@ public class VueTpBibliotheque {
 
     /**
      * AFFICHAGE LISTE DE PRETS avec PRETLIVRE
-     * @param listPretLivre Arraylist
+     * @param pretLivres Arraylist
      */
 
-    public static void affichePretLivre(ArrayList<PretLivre> listPretLivre) {
+    public static void affichePretLivre(ArrayList<PretLivre> pretLivres) {
 
         System.out.println("******** Affichage des prêts : ********");
 
-        for (int i = 0; i < listPretLivre.size(); i++) {
-            System.out.println(listPretLivre.get(i).toString());
+        for (int i = 0; i < pretLivres.size(); i++) {
+            System.out.println(pretLivres.get(i).toString());
 
         }
     }
@@ -210,7 +210,7 @@ public class VueTpBibliotheque {
         System.out.println("Merci de saisir le nom de l'abonné : "); // ideal recherche fenetre comboBox
         nomAbonne = sc.nextLine().trim().toLowerCase();
         for (Abonne abonne : Abonne.listAbonnes) {
-            if (nomAbonne.equals(Abonne.getNom())) {
+            if (nomAbonne.equals(Abonne.rechercheParNom(nomAbonne))) {
                 Abonne resultatRecherche = abonne;
                 System.out.println(abonne.toString());
                 break; // ?? nécessaire ? comment stopper la recherche (pas tout parcourir)
