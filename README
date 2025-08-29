@@ -1,0 +1,34 @@
+Questions 
+
+# COTE CLASSE #
+
+**** PretLivre : 
+
+- Exemple, la bibliothécaire saisie un nom d'Abonné pour lancer le PretLivre : le système utilise rechercheParNom qui est une méthode public static dans Abonne qui doit nous retourner un abonne... 
+
+toujours des problèmes pour manipuler l'objet ET la liste (d'Objet ou de donnée)
+
+(Methode testée rechercheParNom dans le main avec une saisie abonne valide et une saisie abonne invalide)
+
+*** PretLivre :
+
+CRUD
+-methode ajouter (PretLivre pretlivres) {} est ce pertinent ? a quoi ca sert et comment s'en servir ? on peut extend les questions a la méthode modifier().
+
+
+*** Main : 
+le boolean dans le switch demande des noms différents pour chaques cas .... Y a t il des conventions de nommage, des standards en anglais (car la langue est moins riche qu'en français)
+
+
+# UTILISATION DE METHODE "clés en main" : #
+
+- Exemple, la bibliothecaire saisie la date manuellement pour une inscription d'un nouvel abonné.  
+
+comment  ?? Utilisation de la méthode LocalDate : sans parler de format, utiliser l'architecture de la fonction pour filtrer la saisie, est ce possible et si oui, comment  ??
+
+
+*** @Test : 
+
+Class testAbonne : les setter (comme setEmail) ont besoin d'un setter static dans la classe Abonne, or si on ajoute static à "setEmail" des erreurs apparaissent dans "REGEX" du  et sur le "this. "
+
+Pour enfonder le clou : lorsqu'on test des fail est ce un rapport de resultat Fail (croix orange) qui est attendu ou un rapport de resultat OK (vert) ?? 
