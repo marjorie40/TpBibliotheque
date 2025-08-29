@@ -102,6 +102,7 @@ public class PretLivre {
     //CRUD
 
     public static void ajouter(PretLivre pretLivre) {
+        getPretLivre().add(pretLivre);
 
     }
     /* throws SaisieException {

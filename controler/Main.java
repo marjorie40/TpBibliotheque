@@ -19,36 +19,10 @@ public class Main {
 
     private static Scanner sc = new Scanner(System.in);
 
+
     public static void main(String[] args) throws SaisieException {
         // le controleur cree le monde
         creationBibliotheque();
-
-        //System.out.println(Abonne.rechercheParNom("testard")); METHODE FONCTIONNE 280825
-
-        // le controleur demande a la vue d'afficher les livres
-        // VueTpBibliotheque.vueAffichageLivres(Livre.livresList);
-
-//        boolean erreur = true;
-//        do {
-        // appel a la vue
-        //VueTpBibliotheque.demandeCreationLivre();
-        // controleur reprend la main - crée l'objet et le stocke
-//            try {
-//                Livre livre = new Livre(
-//                        VueTpBibliotheque.getTitre(),
-//                        VueTpBibliotheque.getAuteur(),
-//                        VueTpBibliotheque.getQuantite(),
-//                        VueTpBibliotheque.getIsbn(),
-//                        true);
-//                Livre.livresList.add(livre);
-//                erreur = false;
-//            } catch (SaisieException e) {
-//                VueTpBibliotheque.afficheMessage("Erreur !" +  e.getMessage());
-//            }
-//
-//        } while (erreur);
-
-        //VueTpBibliotheque.vueAffichageLivres(Livre.livresList);
 
         // MENU
         boolean fin = false;
@@ -130,24 +104,6 @@ public class Main {
                             "merci de choisir une nouvelle action [1-6] ou de sortir du programme [0] ", 1);
 
                     break;
-//                    // CREATION PRET avec saisie de STRING plutot que recuperation d'OBJET
-//                    VueTpBibliotheque.demandeCreationPret();
-//                    // CONTROLEUR
-//                    Livre tempo = Livre.rechercheParTitre(VueTpBibliotheque.getTitre());
-//                    if (tempo != null) {
-//                        VueTpBibliotheque.afficheMessage(tempo.toString(), 1);
-//                    } else {
-//                        VueTpBibliotheque.afficheMessage("Le livre est inconnu ou indisponible", 0);
-//                    }
-//
-//                    Abonne abo = Abonne.rechercheParNom(VueTpBibliotheque.getNom());
-//                    if (abo != null) {
-//                        VueTpBibliotheque.afficheMessage(abo.toString(), 1);
-//                    } else {
-//                        VueTpBibliotheque.afficheMessage("L'abonné est inconnu, " +
-//                                "veuillez le créer en selectionnant [1] depuis le menu. ",0);
-//                    }
-//                    break;
                 case 4:
                     VueTpBibliotheque.vueAffichageAbonnes(Abonne.listAbonnes);
                     break;
